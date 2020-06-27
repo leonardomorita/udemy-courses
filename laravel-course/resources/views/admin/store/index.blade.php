@@ -1,21 +1,28 @@
-<table>
-    <thead>
-        <tr>
-            <th>$</th>
-            <th>Loja</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
+{{-- Revisar --}}
+@extends('layouts.app')
 
-    <tbody>
-        @foreach ($stores as $store)
+@section('content')
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>{{ $store->id }}</td>
-                <td>{{ $store->name }}</td>
-                <td></td>
+                <th>$</th>
+                <th>Loja</th>
+                <th>Ações</th>
             </tr>
-        @endforeach
-    </tbody>
-</table>
+        </thead>
 
-{{ $stores->links() }}
+        <tbody>
+            @foreach ($stores as $store)
+                <tr>
+                    <td>{{ $store->id }}</td>
+                    <td>{{ $store->name }}</td>
+                    <td></td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    {{-- Para usar este método, a variável tem que ser atribuída configurada com paginate() --}}
+    {{-- Este método apresenta na tela os links para a navegação entre páginas da listagem --}}
+    {{ $stores->links() }}
+@endsection

@@ -15,4 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin/stores', 'Admin\\StoreController@index');
+// Revisar
+Route::prefix('admin')->namespace('Admin')->group(function () {
+    Route::prefix('stores')->group(function () {
+        // Route::get('/stores', 'Admin\\StoreController@index');
+        Route::get('/', 'StoreController@index');
+        Route::get('/create', 'StoreController@create');
+        Route::post('/store', 'StoreController@store');
+    });
+});
