@@ -31,7 +31,6 @@ class StoreController extends Controller
         return $store;
     }
 
-    // Revisar
     public function edit($store)
     {
         $store = \App\Store::find($store);
@@ -39,7 +38,6 @@ class StoreController extends Controller
         return view('admin.store.edit', compact('store'));
     }
 
-    // Revisar
     public function update(Request $request, $store)
     {
         $data = $request->all();
@@ -50,7 +48,6 @@ class StoreController extends Controller
         return redirect()->route('admin.stores.index');
     }
 
-    // Revisar
     public function destroy($store)
     {
         $store = \App\Store::find($store);

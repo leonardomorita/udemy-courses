@@ -15,7 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Revisar
 Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
     Route::prefix('stores')->name('stores.')->group(function () {
         // Route::get('/stores', 'Admin\\StoreController@index');
