@@ -1,4 +1,3 @@
-{{-- Revisar --}}
 @extends('layouts.app')
 
 @section('content')

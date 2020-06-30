@@ -15,14 +15,13 @@ class StoreController extends Controller
         return view('admin.store.index', compact('stores'));
     }
 
-    // Revisar
     public function create()
     {
         $users = User::all(['id', 'name']);
+
         return view('admin.store.create', compact('users'));
     }
 
-    // Revisar
     public function store(Request $request)
     {
         $data = $request->all();
@@ -30,5 +29,34 @@ class StoreController extends Controller
         $store = $user->store()->create($data);
 
         return $store;
+    }
+
+    // Revisar
+    public function edit($store)
+    {
+        $store = \App\Store::find($store);
+
+        return view('admin.store.edit', compact('store'));
+    }
+
+    // Revisar
+    public function update(Request $request, $store)
+    {
+        $data = $request->all();
+
+        $store = \App\Store::find($store);
+        $store->update($data);
+
+        return redirect()->route('admin.stores.index');
+    }
+
+    // Revisar
+    public function destroy($store)
+    {
+        $store = \App\Store::find($store);
+
+        $store->delete();
+
+        return redirect()->route('admin.stores.index');
     }
 }
