@@ -25,4 +25,7 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
         Route::post('/update/{store}', 'StoreController@update')->name('update');
         Route::get('/destroy/{store}', 'StoreController@destroy')->name('destroy');
     });
+
+    // Revisar
+    Route::resource('products', 'ProductController');
 });

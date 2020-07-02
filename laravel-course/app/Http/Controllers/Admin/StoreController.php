@@ -43,6 +43,7 @@ class StoreController extends Controller
         $data = $request->all();
 
         $store = \App\Store::find($store);
+
         $store->update($data);
 
         return redirect()->route('admin.stores.index');
