@@ -1,37 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<%- include("header") -%>
+    <div class="box" id="heading">
+        <h1><%= listTitle %></h1>
+    </div>
 
-        <title>To Do List</title>
+    <div class="box">
+        <% for (let i = 0; i < activities.length; i++) { %>
+            <div class="item">
+                <input type="checkbox">
+                <p><%= activities[i] %></p>
+            </div>
+        <% } %>
 
-        <link rel="stylesheet" href="css/styles.css">
-    </head>
-
-    <body>
-
-        <div class="box" id="heading">
-            <!-- <h1>It's a <%= kindOfDay %> </h1> -->
-            <h1><%= weekname %></h1>
-        </div>
-
-        <div class="box">
-            <% for (let i = 0; i < activities.length; i++) { %>
-                <div class="item">
-                    <input type="checkbox">
-                    <p><%= activities[i] %></p>
-                </div>
-                
-            <% } %>
-
-            <form class="item" action="/" method="post">
-                <input type="text" name="activity" placeholder="Type a new activiy" autocomplete="off">
-    
-                <button type="submit">+</button>
-            </form>
-        </div>
-
-        
-    </body>
-</html>
+        <form class="item" action="/" method="post">
+            <input type="text" name="activity" placeholder="Type a new activiy" autocomplete="off">
+            <button type="submit" name="button" value=<%= listTitle %>>+</button>
+        </form>
+    </div>
+<%- include("footer") -%>
