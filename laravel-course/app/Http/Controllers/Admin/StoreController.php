@@ -28,6 +28,8 @@ class StoreController extends Controller
         $user = \App\User::find($data['user']);
         $store = $user->store()->create($data);
 
+        flash('A loja foi criada com sucesso')->success();
+
         return $store;
     }
 
@@ -44,6 +46,8 @@ class StoreController extends Controller
 
         $store = \App\Store::find($store);
         $store->update($data);
+
+        flash('As informações da loja foram atualizadas com sucesso')->success();
 
         return redirect()->route('admin.stores.index');
     }
