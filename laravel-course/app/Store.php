@@ -10,6 +10,8 @@ class Store extends Model
 
     public function user()
     {
+        // Quem está recebendo a chave estrangeira, usa o belongsTo
+        // A tabela 'Store' está recebendo a chave estrangeira da tabela 'User'
         return $this->belongsTo(User::class);
     }
 
