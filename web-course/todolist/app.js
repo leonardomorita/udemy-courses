@@ -8,17 +8,17 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-let activities = [];
-let works = [];
+const activities = [];
+const works = [];
 
 app.get('/', function (req, res) {
-    let day = date.getDate();
+    const day = date.getDate();
 
     res.render('list', {listTitle: day, activities: activities});
 });
 
 app.post('/', function (req, res) {
-    let activity = req.body.activity;
+    const activity = req.body.activity;
 
     if (req.body.button === "Work") {
         works.push(activity);
@@ -34,7 +34,7 @@ app.get('/work', function (req, res) {
 });
 
 app.post('/work', function (req, res) {
-    let item = req.body.activities;
+    const item = req.body.activities;
     works.push(item);
 
     res.redirect("/work");
