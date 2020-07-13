@@ -9,32 +9,34 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
             <a class="navbar-brand" href="{{ route('home') }}">Marketplace</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item @if(request()->is('admin/stores')) active @endif"> {{-- Se a rota for 'admin/stores', colocar o atributo 'active' --}}
-                        <a class="nav-link" href="{{ route('admin.stores.index') }}">Loja</a>
-                    </li>
-                    <li class="nav-item @if(request()->is('admin/products')) active @endif">
-                        <a class="nav-link" href="{{ route('admin.products.index') }}">Produtos</a>
-                    </li>
-                </ul>
-                <div class="my-2 my-lg-0">
+                @auth
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#" onclick="event.preventDefault(); document.querySelector('form.logout').submit();">Sair</a>
-
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
-                            </form>
+                        <li class="nav-item @if(request()->is('admin/stores')) active @endif"> {{-- Se a rota for 'admin/stores', colocar o atributo 'active' --}}
+                            <a class="nav-link" href="{{ route('admin.stores.index') }}">Loja</a>
+                        </li>
+                        <li class="nav-item @if(request()->is('admin/products')) active @endif">
+                            <a class="nav-link" href="{{ route('admin.products.index') }}">Produtos</a>
                         </li>
                     </ul>
-                </div>
+                    <div class="my-2 my-lg-0">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#" onclick="event.preventDefault(); document.querySelector('form.logout').submit();">Sair</a>
+
+                                <form class="logout" action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @endauth
             </div>
 
         </nav>
