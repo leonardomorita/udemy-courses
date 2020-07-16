@@ -20,10 +20,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 @auth
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item @if(request()->is('admin/stores')) active @endif"> {{-- Se a rota for 'admin/stores', colocar o atributo 'active' --}}
+                        <li class="nav-item @if(request()->is('admin/stores*')) active @endif"> {{-- Se a rota for 'admin/stores', colocar o atributo 'active' --}}
                             <a class="nav-link" href="{{ route('admin.stores.index') }}">Loja</a>
                         </li>
-                        <li class="nav-item @if(request()->is('admin/products')) active @endif">
+                        <li class="nav-item @if(request()->is('admin/products*')) active @endif">
                             <a class="nav-link" href="{{ route('admin.products.index') }}">Produtos</a>
                         </li>
                     </ul>

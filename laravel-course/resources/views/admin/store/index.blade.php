@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <a href="{{ route('admin.stores.create') }}" class="btn btn-lg btn-success">Adicionar loja</a>
+    @if (!$store)
+        <a href="{{ route('admin.stores.create') }}" class="btn btn-lg btn-success">Adicionar loja</a>
+    @endif
 
     <table class="table table-striped">
         <thead>
@@ -13,27 +15,25 @@
         </thead>
 
         <tbody>
-            @foreach ($stores as $store)
-                <tr>
-                    <td>{{ $store->id }}</td>
-                    <td>{{ $store->name }}</td>
-                    <td>
-                        <div class="btn-group">
-                            <a href="{{ route('admin.stores.edit', ['store' => $store->id]) }}" class="btn btn-sm btn-primary">EDITAR</a>
+            <tr>
+                <td>{{ $store->id }}</td>
+                <td>{{ $store->name }}</td>
+                <td>
+                    <div class="btn-group">
+                        <a href="{{ route('admin.stores.edit', ['store' => $store->id]) }}" class="btn btn-sm btn-primary">EDITAR</a>
 
-                            <form action="{{ route('admin.stores.destroy', ['store' => $store->id]) }}" method="POST">
-                                @csrf
-                                @method("DELETE")
-                                <button type="submit" class="btn btn-sm btn-danger">EXCLUIR</button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-            @endforeach
+                        <form action="{{ route('admin.stores.destroy', ['store' => $store->id]) }}" method="POST">
+                            @csrf
+                            @method("DELETE")
+                            <button type="submit" class="btn btn-sm btn-danger">EXCLUIR</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
         </tbody>
     </table>
 
     {{-- Para usar este método, a variável tem que ser atribuída configurada com paginate() --}}
     {{-- Este método apresenta na tela os links para a navegação entre páginas da listagem --}}
-    {{ $stores->links() }}
+    {{-- {{ $stores->links() }} --}}
 @endsection

@@ -8,36 +8,51 @@
 
         <div class="form-group">
             <label for="product">Nome do produto</label>
-            <input type="text" id="product" class="form-control" name="name" autofocus>
+            <input type="text" name="name" id="product" class="form-control @error('name') is-invalid @enderror" autofocus>
+
+            @error('name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="description">Descrição do produto</label>
-            <input type="text" id="description" class="form-control" name="description">
+            <input type="text" name="description" id="description" class="form-control @error('description') is-invalid @enderror">
+
+            @error('description')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="body">Características do produto</label>
-            <textarea id="body" class="form-control" name="body" cols="30" rows="10"></textarea>
+            <textarea name="body" id="body" class="form-control @error('body') is-invalid @enderror" cols="30" rows="10"></textarea>
+
+            @error('body')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="price">Preço do produto</label>
-            <input type="number" id="price" class="form-control" name="price">
+            <input type="number" name="price" id="price" class="form-control @error('price') is-invalid @enderror">
+
+            @error('price')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="slug">Slug do produto</label>
             <input type="text" id="slug" class="form-control" name="slug">
-        </div>
-
-        <div class="form-group">
-            <label>Lojas</label>
-            <select class="form-control" name="store">
-                @foreach($stores as $store)
-                    <option value="{{ $store->id }}">{{ $store->name }}</option>
-                @endforeach
-            </select>
         </div>
 
         <div>
