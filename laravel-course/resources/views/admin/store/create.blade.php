@@ -18,7 +18,7 @@
 
         <div class="form-group">
             <label>Descrição</label>
-            <input type="text" name="description" class="form-control @error('description') is-invalid @enderror" value="{{ old('name') }}">
+            <input type="text" name="description" class="form-control @error('description') is-invalid @enderror" value="{{ old('description') }}">
 
             @error('description')
                 <div class="invalid-feedback">
@@ -29,7 +29,7 @@
 
         <div class="form-group">
             <label>Telefone</label>
-            <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('name') }}">
+            <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}">
 
             @error('phone')
                 <div class="invalid-feedback">
@@ -40,7 +40,7 @@
 
         <div class="form-group">
             <label>Celular</label>
-            <input type="text" name="mobile_phone" class="form-control @error('mobile_phone') is-invalid @enderror" value="{{ old('name') }}">
+            <input type="text" name="mobile_phone" class="form-control @error('mobile_phone') is-invalid @enderror" value="{{ old('mobile_phone') }}">
 
             @error('mobile_phone')
                 <div class="invalid-feedback">
