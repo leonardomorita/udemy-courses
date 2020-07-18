@@ -5,11 +5,12 @@
         <a href="{{ route('admin.stores.create') }}" class="btn btn-lg btn-success">Adicionar loja</a>
     @endif
 
-    <table class="table table-striped">
+    <table class="table table-striped" style="text-align: center">
         <thead>
             <tr>
                 <th>$</th>
                 <th>Loja</th>
+                <th>Quantidade de Produtos</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -18,6 +19,7 @@
             <tr>
                 <td>{{ $store->id }}</td>
                 <td>{{ $store->name }}</td>
+                <td>{{ $store->products->count() }}</td>
                 <td>
                     <div class="btn-group">
                         <a href="{{ route('admin.stores.edit', ['store' => $store->id]) }}" class="btn btn-sm btn-primary">EDITAR</a>
