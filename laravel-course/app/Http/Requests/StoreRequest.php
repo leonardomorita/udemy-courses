@@ -35,7 +35,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'required' => 'O campo é obrigatório.',
-            'min'      => 'O campo :attribute é obrigatório ter no mínimo :min caractéres.',
+            'min'      => 'O campo é obrigatório ter no mínimo :min caractéres.',
         ];
     }
 }
