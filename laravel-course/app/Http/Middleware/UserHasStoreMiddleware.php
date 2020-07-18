@@ -15,6 +15,7 @@ class UserHasStoreMiddleware
      */
     public function handle($request, Closure $next)
     {
+        // Verifica se o usuário tem uma loja
         if (auth()->user()->store()->count()) {
             flash('Você já tem uma loja criada.')->warning();
 
