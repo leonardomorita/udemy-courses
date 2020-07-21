@@ -25,7 +25,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = $this->product->paginate(10);
+        $products = auth()->user()->store->products()->paginate(10);
 
         return view('admin.product.index', compact('products'));
     }
@@ -37,9 +37,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $stores = \App\Store::all(['id', 'name']);
+        $categories = \App\Category::all(['id', 'name']);
 
-        return view('admin.product.create', compact('stores'));
+        return view('admin.product.create', compact('categories'));
     }
 
     /**
@@ -55,8 +55,10 @@ class ProductController extends Controller
         // Retorna a loja do usuário
         $store = auth()->user()->store;
         // Cria um produto para a loja
-        $store->products()->create($data);
+        $product = $store->products()->create($data);
 
+        // Adiciona na tabela intermediária a relação entre o produto criado com as categorias selecionadas, através do 'sync()'
+        $product->categories()->sync($data['categories']);
         flash('O produto foi criado com sucesso')->success();
 
         return redirect()->route('admin.products.index');
@@ -82,8 +84,9 @@ class ProductController extends Controller
     public function edit($product)
     {
         $product = $this->product->find($product);
+        $categories = \App\Category::all(['id', 'name']);
 
-        return view('admin.product.edit', compact('product'));
+        return view('admin.product.edit', compact('product', 'categories'));
     }
 
     /**
@@ -99,7 +102,7 @@ class ProductController extends Controller
 
         $product = $this->product->find($product);
         $product->update($data);
-
+        $product->categories()->sync($data['categories']);
         flash('As informações do produto foram atualizadas com sucesso')->success();
 
         return redirect()->route('admin.products.index');

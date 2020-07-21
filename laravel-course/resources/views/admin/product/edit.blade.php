@@ -24,7 +24,16 @@
 
         <div class="form-group">
             <label for="price">Preço do produto</label>
-            <input type="number" id="price" class="form-control" name="price" value="{{ $product->price }}">
+            <input type="text" id="price" class="form-control" name="price" value="{{ $product->price }}">
+        </div>
+
+        <div class="form-group">
+            <label for="category">Categorias</label>
+            <select name="categories[]" id="category" class="form-control" multiple>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" @if($product->categories->contains($category)) selected @endif>{{ $category->name }}</option>
+                @endforeach
+            </select>
         </div>
 
         <div class="form-group">

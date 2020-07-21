@@ -41,13 +41,22 @@
 
         <div class="form-group">
             <label for="price">Preço do produto</label>
-            <input type="number" name="price" id="price" class="form-control @error('price') is-invalid @enderror">
+            <input type="text" name="price" id="price" class="form-control @error('price') is-invalid @enderror">
 
             @error('price')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
             @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="category">Categorias</label>
+            <select name="categories[]" id="category" class="form-control" multiple>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
         </div>
 
         <div class="form-group">
