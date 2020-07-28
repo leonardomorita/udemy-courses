@@ -59,6 +59,13 @@ class ProductController extends Controller
 
         // Adiciona na tabela intermediária a relação entre o produto criado com as categorias selecionadas, através do 'sync()'
         $product->categories()->sync($data['categories']);
+
+        if ($request->hasFile('photos')) {
+            $images = $this->imageUpload($request, "image");
+            // Insere as referências da imagem no banco de dados
+            $product->images()->createMany($images);
+        }
+
         flash('O produto foi criado com sucesso')->success();
 
         return redirect()->route('admin.products.index');
@@ -122,5 +129,17 @@ class ProductController extends Controller
         flash('O produto foi excluído com sucesso')->success();
 
         return redirect()->route('admin.products.index');
+    }
+
+    private function imageUpload(Request $request, $imageColumn)
+    {
+        $images = $request->file('photos');
+
+        $uploadedImages = [];
+        foreach ($images as $image) {
+            $uploadedImages[] = [$imageColumn => $image->store('products', 'public')];
+        }
+
+        return $uploadedImages;
     }
 }
