@@ -12,10 +12,12 @@
         <%# } %>
 
         <% activities.forEach(function (activity) { %>
-            <div class="item">
-                <input type="checkbox">
-                <p><%= activity.name %></p>
-            </div>
+            <form>
+                <div class="item">
+                    <input type="checkbox">
+                    <p><%= activity.name %></p>
+                </div>
+            </form>
         <% }); %>
 
         <form class="item" action="/" method="post">

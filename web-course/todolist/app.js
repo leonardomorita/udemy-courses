@@ -5,9 +5,10 @@ const mongoose = require('mongoose');
 // const date = require(__dirname + '/date.js');
 
 const app = express();
+
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded( { extended: true } ));
 app.use(express.static("public"));
 
 mongoose.connect("mongodb://localhost:27017/todolist", {useNewUrlParser: true, useUnifiedTopology: true});
@@ -56,15 +57,16 @@ app.get('/', function (req, res) {
 });
 
 app.post('/', function (req, res) {
-    const activity = req.body.activity;
+    const activityName = req.body.activity;
 
-    if (req.body.button === "Work") {
-        
-        res.redirect("/work");
-    } else {
-        
-        res.redirect('/');
-    }
+    const activity = new Activity({
+        name: activityName
+    });
+
+    // Salva o registro no banco de dados
+    activity.save();
+
+    res.redirect('/');
 });
 
 app.get('/work', function (req, res) {
