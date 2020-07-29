@@ -12,9 +12,9 @@
         <%# } %>
 
         <% activities.forEach(function (activity) { %>
-            <form>
+            <form action="/delete" method="POST">
                 <div class="item">
-                    <input type="checkbox">
+                    <input type="checkbox" name="checkbox" value="<%= activity.id %>" onchange="this.form.submit()">
                     <p><%= activity.name %></p>
                 </div>
             </form>

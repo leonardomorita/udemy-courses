@@ -69,6 +69,18 @@ app.post('/', function (req, res) {
     res.redirect('/');
 });
 
+app.post('/delete', function (req, res) {
+    const activityId = req.body.checkbox;
+    
+    Activity.deleteOne({_id: activityId}, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect('/');
+        }
+    })
+});
+
 app.get('/work', function (req, res) {
     res.render("list", {listTitle: "Work"});
 });
