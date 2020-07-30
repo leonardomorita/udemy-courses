@@ -20,7 +20,13 @@ const activitySchema = new mongoose.Schema ({
     }
 });
 
+const listSchema = {
+    name: String,
+    items: [activitySchema]
+};
+
 const Activity = mongoose.model('Activity', activitySchema);
+const List = mongoose.model('List', listSchema);
 
 app.get('/', function (req, res) {
     // const day = date.getDate();
@@ -56,6 +62,27 @@ app.get('/', function (req, res) {
     });
 });
 
+app.get('/:name', function (req, res) {
+    const listName = req.params.name;
+
+    List.findOne({name: listName}, function (err, list) {
+        if (!err) {
+            if (!list) {
+                const list = new List({
+                    name: listName,
+                    activities: []
+                });
+            
+                list.save();
+                res.redirect('/' + listName);
+            } else {
+                return res.render('list', {listTitle: list.name, activities: list.activities});
+            }
+        }
+    });
+    // res.render("list", {listTitle: "Work"});
+});
+
 app.post('/', function (req, res) {
     const activityName = req.body.activity;
 
@@ -79,10 +106,6 @@ app.post('/delete', function (req, res) {
             res.redirect('/');
         }
     })
-});
-
-app.get('/work', function (req, res) {
-    res.render("list", {listTitle: "Work"});
 });
 
 app.post('/work', function (req, res) {
