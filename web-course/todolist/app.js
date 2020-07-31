@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const _ = require('lodash');
 
 // const date = require(__dirname + '/date.js');
 
@@ -22,7 +23,7 @@ const activitySchema = new mongoose.Schema ({
 
 const listSchema = {
     name: String,
-    items: [activitySchema]
+    activities: [activitySchema]
 };
 
 const Activity = mongoose.model('Activity', activitySchema);
@@ -63,7 +64,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/:name', function (req, res) {
-    const listName = req.params.name;
+    const listName = _.capitalize(req.params.name);
 
     List.findOne({name: listName}, function (err, list) {
         if (!err) {
@@ -76,7 +77,7 @@ app.get('/:name', function (req, res) {
                 list.save();
                 res.redirect('/' + listName);
             } else {
-                return res.render('list', {listTitle: list.name, activities: list.activities});
+                res.render('list', {listTitle: list.name, activities: list.activities});
             }
         }
     });
@@ -85,27 +86,55 @@ app.get('/:name', function (req, res) {
 
 app.post('/', function (req, res) {
     const activityName = req.body.activity;
+    const listName = req.body.list;
 
     const activity = new Activity({
         name: activityName
     });
 
-    // Salva o registro no banco de dados
-    activity.save();
+    // Compara se o nome da lista é a padrão, que seria o 'Today'
+    if (listName === "Today") {
+        // Salva o registro no banco de dados
+        activity.save();
+        res.redirect('/');
+    } else {
+        List.findOne({name: listName}, function (err, list) {
+            if (!err) {
+                // Adiciona a atividade no array
+                list.activities.push(activity);
+                // Salva no banco de dados
+                list.save();
 
-    res.redirect('/');
+                res.redirect('/' + listName);
+            }
+        });
+    }
 });
 
 app.post('/delete', function (req, res) {
     const activityId = req.body.checkbox;
+    const listName = req.body.listName;
     
-    Activity.deleteOne({_id: activityId}, function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.redirect('/');
-        }
-    })
+    if (listName === "Today") {
+        Activity.deleteOne({_id: activityId}, function (err) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.redirect('/');
+            }
+        });
+    } else {
+        // No primeiro parâmetro verifica qual a lista (documento) que vai ser manipulada.
+        // No segundo parâmetro será especificado o que vai ser atualizado. No caso, foi utilizado o $pull, que seria a remoção de itens.
+        // No terceiro parâmetro é o 'callback'.
+        List.findOneAndUpdate({name: listName}, {$pull: { activities: { _id: activityId } }}, function (err, list) {
+            if (!err) {
+                res.redirect('/' + listName);
+            }
+        });
+    }
+
+    
 });
 
 app.post('/work', function (req, res) {

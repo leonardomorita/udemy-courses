@@ -18,13 +18,14 @@
                         <input type="checkbox" name="checkbox" value="<%= activity.id %>" onchange="this.form.submit()">
                         <p><%= activity.name %></p>
                     </div>
+                    <input type="hidden" name="listName" value="<%= listTitle %>">
                 </form>
             <% }); %>
         <% } %>
         
-        <form class="item" action="/" method="post">
+        <form class="item" action="/" method="POST">
             <input type="text" name="activity" placeholder="Type a new activiy" autocomplete="off">
-            <button type="submit" name="button" value=<%= listTitle %>>+</button>
+            <button type="submit" name="list" value=<%= listTitle %>>+</button>
         </form>
     </div>
 <%- include("footer") -%>
