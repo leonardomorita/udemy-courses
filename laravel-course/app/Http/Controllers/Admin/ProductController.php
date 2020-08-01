@@ -62,7 +62,7 @@ class ProductController extends Controller
 
         if ($request->hasFile('photos')) {
             $images = $this->imageUpload($request, "image");
-            // Insere as referências da imagem no banco de dados
+            // Insere as referências da imagem no banco de dados, relacionando o registro da tabela "product" com a tabela "product_photos"
             $product->images()->createMany($images);
         }
 
@@ -110,6 +110,12 @@ class ProductController extends Controller
         $product = $this->product->find($product);
         $product->update($data);
         $product->categories()->sync($data['categories']);
+
+        if ($request->hasFile('photos')) {
+            $images = $this->imageUpload($request, 'image');
+            $product->images()->createMany($images);
+        }
+
         flash('As informações do produto foram atualizadas com sucesso')->success();
 
         return redirect()->route('admin.products.index');
