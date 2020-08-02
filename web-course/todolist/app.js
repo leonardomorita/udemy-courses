@@ -12,7 +12,8 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded( { extended: true } ));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost:27017/todolist", {useNewUrlParser: true, useUnifiedTopology: true});
+// mongoose.connect("mongodb://localhost:27017/todolist", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb+srv://admin:test@cluster0.ddpnj.mongodb.net/todolist", {useNewUrlParser: true});
 
 const activitySchema = new mongoose.Schema ({
     name: {
