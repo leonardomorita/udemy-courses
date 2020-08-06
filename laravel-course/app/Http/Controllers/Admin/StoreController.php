@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRequest;
+use App\Traits\UploadTrait;
 
 class StoreController extends Controller
 {
+    use UploadTrait;
+
     public function __construct()
     {
         // Verifica se o usuário tem uma loja
@@ -36,6 +39,11 @@ class StoreController extends Controller
 
         // Pega as informações do atual usuário
         $user = auth()->user();
+
+        if ($request->hasFile('logo')) {
+            $data['logo'] = $this->imageUpload($request);
+        }
+
         $store = $user->store()->create($data);
 
         flash('A loja foi criada com sucesso')->success();
