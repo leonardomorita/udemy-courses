@@ -5,17 +5,18 @@ namespace App\Traits;
 use Illuminate\Http\Request;
 
 trait UploadTrait {
-    private function imageUpload(Request $request, $imageColumn = null)
+    private function imageUpload($images, $imageColumn = null)
     {
-        $images = $request->file('photos');
-
         $uploadedImages = [];
-        foreach ($images as $image) {
-            if (!is_null($imageColumn)) {
+        // Verificação se a imagem é da loja ou produto, verificando se a variável 'images' é um array ou não é um array.
+        if (is_array($images)) {
+            // Caso for array, as imagens são do produto
+            foreach ($images as $image) {
                 $uploadedImages[] = [$imageColumn => $image->store('products', 'public')];
-            } else {
-                $uploadedImages = $image;
             }
+        } else {
+            // Caso não for array, é a logo da loja
+            $uploadedImages = $images->store('logo', 'public');
         }
 
         return $uploadedImages;
