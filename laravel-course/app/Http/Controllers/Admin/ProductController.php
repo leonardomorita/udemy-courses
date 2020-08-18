@@ -60,6 +60,7 @@ class ProductController extends Controller
         // Adiciona na tabela intermediária a relação entre o produto criado com as categorias selecionadas, através do 'sync()'
         $product->categories()->sync($data['categories']);
 
+        // Verifica se a requisição tem arquivos com o parâmetro chamado 'photos'
         if ($request->hasFile('photos')) {
             $images = $this->imageUpload($request, "image");
             // Insere as referências da imagem no banco de dados, relacionando o registro da tabela "product" com a tabela "product_photos"
