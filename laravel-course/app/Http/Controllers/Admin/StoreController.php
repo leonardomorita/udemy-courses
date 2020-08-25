@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRequest;
 use App\Traits\UploadTrait;
+use Illuminate\Support\Facades\Storage;
 
 class StoreController extends Controller
 {
@@ -63,6 +64,15 @@ class StoreController extends Controller
         $data = $request->all();
 
         $store = \App\Store::find($store);
+
+        if ($request->hasFile('logo')) {
+            if (Storage::disk('public')->exists($store->logo)) {
+                Storage::disk('public')->delete($store->logo);
+            }
+
+            $data['logo'] = $this->imageUpload($request->file('logo'));
+        }
+
         $store->update($data);
 
         flash('As informações da loja foram atualizadas com sucesso')->success();
