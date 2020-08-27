@@ -28,7 +28,7 @@ class ProductRequest extends FormRequest
             'description'   => 'required|min:30',
             'body'          => 'required',
             'price'         => 'required',
-            'photos'        => 'image'
+            'photos.*'        => 'image' // como o photos é um array, usa '.' para acessar o índice do array e o '*' para dizer que é para verificar cada índice do array
         ];
     }
 
