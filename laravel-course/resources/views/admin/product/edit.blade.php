@@ -9,31 +9,63 @@
 
         <div class="form-group">
             <label for="product">Nome do produto</label>
-            <input type="text" id="product" class="form-control" name="name" value="{{ $product->name }}" autofocus>
+            <input type="text" id="product" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $product->name }}" autofocus>
+
+            @error('name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="description">Descrição do produto</label>
-            <input type="text" id="description" class="form-control" name="description" value="{{ $product->description }}">
+            <input type="text" id="description" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ $product->description }}">
+
+            @error('description')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="body">Características do produto</label>
-            <textarea id="body" class="form-control" name="body" cols="30" rows="10">{{ $product->body }}</textarea>
+            <textarea id="body" class="form-control @error('body') is-invalid @enderror" name="body" cols="30" rows="10">{{ $product->body }}</textarea>
+
+            @error('body')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="price">Preço do produto</label>
-            <input type="text" id="price" class="form-control" name="price" value="{{ $product->price }}">
+            <input type="text" id="price" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ $product->price }}">
+
+            @error('price')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="category">Categorias</label>
-            <select name="categories[]" id="category" class="form-control" multiple>
+            <select name="categories[]" id="category" class="form-control @error('categories') is-invalid @enderror" multiple>
+
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}" @if($product->categories->contains($category)) selected @endif>{{ $category->name }}</option>
                 @endforeach
+
             </select>
+
+            @error('categories')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
