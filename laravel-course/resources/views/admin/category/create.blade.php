@@ -26,11 +26,6 @@
             @enderror
         </div>
 
-        <div class="form-group">
-            <label for="slug">Slug da Categoria</label>
-            <input type="text" id="slug" class="form-control" name="slug">
-        </div>
-
         <button type="submit" class="btn btn-success btn-md">Criar Categoria</button>
     </form>
 @endsection

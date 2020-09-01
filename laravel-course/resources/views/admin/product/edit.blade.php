@@ -77,11 +77,6 @@
             @enderror
         </div>
 
-        <div class="form-group">
-            <label for="slug">Slug do produto</label>
-            <input type="text" id="slug" class="form-control" name="slug" value="{{ $product->slug }}">
-        </div>
-
         <div>
             <button type="submit" class="btn btn-success btn-md">Atualizar produto</button>
         </div>

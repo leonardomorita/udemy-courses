@@ -78,11 +78,6 @@
             @enderror
         </div>
 
-        <div class="form-group">
-            <label for="slug">Slug do produto</label>
-            <input type="text" id="slug" class="form-control" name="slug">
-        </div>
-
         <div>
             <button type="submit" class="btn btn-success btn-md">Criar produto</button>
         </div>
