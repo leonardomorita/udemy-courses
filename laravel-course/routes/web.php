@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 // Adicionando para as rotas que estão dentro do grupo, um middleware de verificação de autenticação do usuário
 Route::group(['middleware' => ['auth']], function () {
