@@ -15,6 +15,10 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/product/{slug}', 'HomeController@single')->name('product.single');
 
+Route::prefix('cart')->name('cart.')->group(function() {
+    Route::post('add', 'CartController@add')->name('add');
+});
+
 // Adicionando para as rotas que estão dentro do grupo, um middleware de verificação de autenticação do usuário
 Route::group(['middleware' => ['auth']], function () {
     Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
