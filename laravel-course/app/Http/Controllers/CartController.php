@@ -8,7 +8,10 @@ class CartController extends Controller
 {
     public function index()
     {
-        dd(session()->get('cart'));
+        // Verifica se na sessão tem a variável 'cart'. Se tiver, atribuir o valor de 'cart' da sessão na variável. Caso contrário, atribua um array vazio
+        $cart = session()->has('cart') ? session()->get('cart') : [];
+
+        return view('cart', compact('cart'));
     }
 
     public function add(Request $request)
@@ -26,6 +29,6 @@ class CartController extends Controller
         }
 
         flash('O produto foi adicionado no carrinho.')->success();
-        redirect()->route('product.single', ['slug' => $product['slug']]);
+        return redirect()->route('product.single', ['slug' => $product['slug']]);
     }
 }
