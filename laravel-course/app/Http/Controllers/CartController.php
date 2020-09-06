@@ -51,4 +51,13 @@ class CartController extends Controller
         session()->put('cart', $products);
         return redirect()->route('cart.index');
     }
+
+    public function cancel()
+    {
+        // Remover a variável 'cart' da sessão
+        session()->forget('cart');
+
+        flash('A compra foi cancelada.')->success();
+        return redirect()->route('cart.index');
+    }
 }
