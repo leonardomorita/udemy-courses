@@ -31,4 +31,24 @@ class CartController extends Controller
         flash('O produto foi adicionado no carrinho.')->success();
         return redirect()->route('product.single', ['slug' => $product['slug']]);
     }
+
+    public function remove($slug)
+    {
+        // Verifica se a variável 'cart' está na sessão atual
+        if ( !session()->has('cart') ) {
+            // Não tem a variável
+            return redirect()->route('cart.index');
+        }
+
+        // Tem a variável
+        $products = session()->get('cart');
+        $products = array_filter($products, function($product) use($slug) {
+            // Será retorna apenas os produtos que não tiver o mesmo slug do que foi passado na requisição
+            return $product['slug'] != $slug;
+        });
+
+        // Sobreescrever a variável 'cart' da sessão com os produtos atualizados, depois que passou do filtro
+        session()->put('cart', $products);
+        return redirect()->route('cart.index');
+    }
 }
