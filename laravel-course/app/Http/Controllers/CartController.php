@@ -20,8 +20,16 @@ class CartController extends Controller
 
         // Verifica na sessão a existência da variável 'cart'
         if (session()->has('cart')) {
-            // Existe a variável 'cart' na sessão, então vai ser adicionado um novo produto na variável 'cart' da sessão
-            session()->push('cart', $product);
+            // Verificar se o produto já existe no carrinho. Se existir, apenas aumentar a quantidade do produto que já existe no carrinho. Se não existir, coloque o produto no carrinho com a quantidade especificada pelo usuário na requisição
+            $products = session()->get('cart');
+            $productsSlugs = array_column($products, 'slug');
+            if ( in_array($product['slug'], $productsSlugs) ) {
+                $products = $this->productIncrement($product['slug'], $product['amount'], $products);
+                session()->put('cart', $products);
+            } else {
+                // Existe a variável 'cart' na sessão, então vai ser adicionado um novo produto na variável 'cart' da sessão
+                session()->push('cart', $product);
+            }
         } else {
             // Não existe a variável 'cart' na sessão, então vai ser criado a mesma na sessão com o primeiro produto
             $products[] = $product;
@@ -59,5 +67,18 @@ class CartController extends Controller
 
         flash('A compra foi cancelada.')->success();
         return redirect()->route('cart.index');
+    }
+
+    private function productIncrement($slug, $amount, $products)
+    {
+        $products = array_map(function($product) use ($slug, $amount) {
+            // Verificar se o slug passado na requisição, existe no carrinho na sessão atual. Ou seja, será verificado se o mesmo produto existe no carrinho. Caso existir, incrementar a quantidade atual com a quantidade que será acrescentada
+            if ($slug == $product['slug']) {
+                $product['amount'] += $amount;
+            }
+            return $product;
+        }, $products);
+
+        return $products;
     }
 }
