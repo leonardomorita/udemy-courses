@@ -22,6 +22,10 @@ Route::prefix('cart')->name('cart.')->group(function() {
     Route::get('cancel', 'CartController@cancel')->name('cancel');
 });
 
+Route::prefix('/checkout')->name('checkout.')->group(function() {
+    Route::get('/', 'CheckoutController@index')->name('index');
+});
+
 // Adicionando para as rotas que estão dentro do grupo, um middleware de verificação de autenticação do usuário
 Route::group(['middleware' => ['auth']], function () {
     Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
