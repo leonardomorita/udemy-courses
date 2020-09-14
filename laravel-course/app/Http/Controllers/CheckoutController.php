@@ -13,6 +13,6 @@ class CheckoutController extends Controller
             return redirect()->route('login');
         }
 
-        dd('Checkout');
+        return view('checkout');
     }
 }
