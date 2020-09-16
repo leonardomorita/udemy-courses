@@ -13,6 +13,24 @@ class CheckoutController extends Controller
             return redirect()->route('login');
         }
 
+        $this->makePagSeguroSession();
+        var_dump(session()->get('pagseguro_session_code'));
+        // session()->forget('pagseguro_session_code');
+
         return view('checkout');
+    }
+
+    private function makePagSeguroSession()
+    {
+        // Verificar se tem o código do pagseguro na sessão atual
+        if ( !session()->has('pagseguro_session_code') ) {
+            // Não tem o código
+
+            $sessionCode = \PagSeguro\Services\Session::create(
+                \PagSeguro\Configuration\Configure::getAccountCredentials()
+            );
+
+            return session()->put('pagseguro_session_code', $sessionCode->getResult());
+        }
     }
 }
