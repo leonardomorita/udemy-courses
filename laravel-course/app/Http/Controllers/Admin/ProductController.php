@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+// Estuda: OK
 
-use App\Http\Controllers\Controller;
+namespace App\Http\Controllers\Admin;
 
 use \App\Product;
 
+use App\Http\Controllers\Controller;
 use \App\Http\Requests\ProductRequest;
 
 use \App\Traits\UploadTrait;
@@ -64,7 +65,7 @@ class ProductController extends Controller
         $product->categories()->sync($data['categories']);
 
         // Verifica se a requisição tem arquivos com o parâmetro chamado 'photos'
-        if ($request->hasFile('photos')) {
+        if ( $request->hasFile('photos') ) {
             $images = $this->imageUpload($request->file('photos'), "image");
             // Insere as referências da imagem no banco de dados, relacionando o registro da tabela "product" com a tabela "product_photos"
             $product->images()->createMany($images);
@@ -115,7 +116,7 @@ class ProductController extends Controller
         $product->update($data);
         $product->categories()->sync($data['categories']);
 
-        if ($request->hasFile('photos')) {
+        if ( $request->hasFile('photos') ) {
             $images = $this->imageUpload($request->file('photos'), 'image');
             $product->images()->createMany($images);
         }

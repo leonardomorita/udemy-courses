@@ -1,5 +1,7 @@
 <?php
 
+// Estuda: OK
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -19,7 +21,7 @@ class CartController extends Controller
         $product = $request->product;
 
         // Verifica na sessão a existência da variável 'cart'
-        if (session()->has('cart')) {
+        if ( session()->has('cart') ) {
             // Verificar se o produto já existe no carrinho. Se existir, apenas aumentar a quantidade do produto que já existe no carrinho. Se não existir, coloque o produto no carrinho com a quantidade especificada pelo usuário na requisição
             $products = session()->get('cart');
             $productsSlugs = array_column($products, 'slug');

@@ -1,9 +1,13 @@
 <?php
 
+// Estuda: OK
+
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\ProductPhoto;
+
+use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,7 +16,7 @@ class ProductPhotoController extends Controller
     public function removePhoto(Request $request)
     {
         $photoName = $request->photoName;
-        // Verifica no disco 'public' se existe o arquivo salvado.
+        // Verifica no disco 'public' se existe o arquivo salvado
         if (Storage::disk('public')->exists($photoName)) {
             // Deleta o arquivo do disco.
             Storage::disk('public')->delete($photoName);

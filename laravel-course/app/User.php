@@ -1,5 +1,7 @@
 <?php
 
+// Estuda: OK
+
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
