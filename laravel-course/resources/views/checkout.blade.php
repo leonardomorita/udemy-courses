@@ -13,7 +13,7 @@
             <form action="" method="POST">
                 <div class="row">
                     <div class="col-lg-12 form-group">
-                        <label for="card_number">Número cartão</label>
+                        <label for="card_number">Número do cartão <span class="brand"></span></label>
                         <input type="text" name="card_number" id="card_number" class="form-control">
                     </div>
                 </div>
@@ -54,13 +54,15 @@
 
     <script>
         let cardNumber = document.querySelector('input[name=card_number]');
+        let spanBrand = document.querySelector('span.brand');
 
         cardNumber.addEventListener('keyup', function() {
             if ( cardNumber.value.length >= 6 ) {
                 PagSeguroDirectPayment.getBrand({
                     cardBin: cardNumber.value.substr(0, 6),
                     success: function(res) {
-                        console.log(res);
+                        const brand = `https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/68x30/${res.brand.name}.png`;
+                        spanBrand.innerHTML = `<img src=${brand} alt=${res.brand.name}>`;
                     },
                     error: function(err) {
                         console.log(err);
