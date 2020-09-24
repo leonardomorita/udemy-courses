@@ -35,6 +35,8 @@
                         <label for="card_cvv">Código de segurança</label>
                         <input type="text" name="card_cvv" id="card_cvv">
                     </div>
+
+                    <div class="col-lg-12 installments form-group"></div>
                 </div>
 
                 <button class="btn btn-success btn-lg">Efetuar pagamento</button>
@@ -82,6 +84,8 @@
                 brand: brand,
                 maxInstallmentsNoInterest: 0,
                 success: function(res) {
+                    let selectInstallments = drawSelectInstallments(res.installments[brand]);
+                    document.querySelector('div.installments').innerHTML = selectInstallments;
                     console.log(res);
                 },
                 error: function(err) {
@@ -91,6 +95,21 @@
 
                 }
             });
+        }
+
+        function drawSelectInstallments(installments) {
+            let select = '<label>Opções de Parcelamento:</label>';
+
+            select += '<select class="form-control">';
+
+            for(let l of installments) {
+                select += `<option value="${l.quantity}|${l.installmentAmount}">${l.quantity}x de ${l.installmentAmount} - Total fica ${l.totalAmount}</option>`;
+            }
+
+
+            select += '</select>';
+
+            return select;
         }
     </script>
 @endsection
