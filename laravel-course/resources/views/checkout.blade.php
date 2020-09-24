@@ -13,7 +13,7 @@
             <form action="" method="POST">
                 <div class="row">
                     <div class="col-lg-12 form-group">
-                        <label for="card_number">Número do cartão</label>
+                        <label for="card_number">Número cartão</label>
                         <input type="text" name="card_number" id="card_number" class="form-control">
                     </div>
                 </div>
@@ -47,7 +47,7 @@
     <script src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
 
     <script>
-        const sessionId = {{ session()->get('pagseguro_session_code') }}
+        const sessionId = '{{ session()->get('pagseguro_session_code') }}';
 
         PagSeguroDirectPayment.setSessionId(sessionId);
     </script>
@@ -61,10 +61,10 @@
                     cardBin: cardNumber.value.substr(0, 6),
                     success: function(res) {
                         console.log(res);
-                    }
+                    },
                     error: function(err) {
                         console.log(err);
-                    }
+                    },
                     complete: function(res) {
                         console.log('Complete: ' + res);
                     }
