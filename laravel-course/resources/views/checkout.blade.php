@@ -15,6 +15,7 @@
                     <div class="col-lg-12 form-group">
                         <label for="card_number">Número do cartão <span class="brand"></span></label>
                         <input type="text" name="card_number" id="card_number" class="form-control">
+                        <input type="hidden" name="card_brand">
                     </div>
                 </div>
 
@@ -39,7 +40,7 @@
                     <div class="col-lg-12 installments form-group"></div>
                 </div>
 
-                <button class="btn btn-success btn-lg">Efetuar pagamento</button>
+                <button class="btn btn-success btn-lg process-checkout">Efetuar pagamento</button>
             </form>
         </div>
     </div>
@@ -66,6 +67,8 @@
                         const brand = `https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/68x30/${res.brand.name}.png`;
                         spanBrand.innerHTML = `<img src=${brand} alt=${res.brand.name}>`;
 
+                        document.querySelector('input[name=card_brand]').value = res.brand.name;
+
                         getInstallments(40, res.brand.name);
                     },
                     error: function(err) {
@@ -76,6 +79,22 @@
                     }
                 });
             }
+        });
+
+        let submitButton = document.querySelector('button.process-checkout');
+        submitButton.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            PagSeguroDirectPayment.createCardToken({
+                cardNumber: document.querySelector('input[name=card_number]').value,
+                brand: document.querySelector('input[name=caard_brand]').value,
+                cvv: document.querySelector('input[name=card_cvv]').value,
+                expirationMonth: document.querySelector('input[name=card_month]').value,
+                expirationYear: document.querySelector('input[name=card_year]').value,
+                success: function(res) {
+                    console.log(res);
+                }
+            });
         });
 
         function getInstallments(amount, brand) {
