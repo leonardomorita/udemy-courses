@@ -24,6 +24,7 @@ Route::prefix('cart')->name('cart.')->group(function() {
 
 Route::prefix('/checkout')->name('checkout.')->group(function() {
     Route::get('/', 'CheckoutController@index')->name('index');
+    Route::post('/proccess', 'CheckoutController@proccess')->name('proccess');
 });
 
 // Adicionando para as rotas que estão dentro do grupo, um middleware de verificação de autenticação do usuário

@@ -101,14 +101,15 @@
 
         function proccessPayment(token) {
             let data = {
-                token: token,
+                card_token: token,
                 hash: PagSeguroDirectPayment.getSenderHash(), // Hash que identifica o usuário nesta sessão
-                installment: document.querySelector('select-installments').value
+                installment: document.querySelector('select.select-installments').value,
+                _token: '{{ csrf_token() }}'
             }
 
             $.ajax({
                 type: 'POST',
-                url: '',
+                url: '{{ route("checkout.proccess") }}',
                 data: data,
                 dataType: 'json', // Aceita somente o json
                 success: function(res) {
