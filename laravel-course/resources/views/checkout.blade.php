@@ -48,6 +48,7 @@
 
 @section('scripts')
     <script src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
+    <script src="{{ asset('assets/js/jquery.ajax.js') }}"></script>
 
     <script>
         const sessionId = '{{ session()->get('pagseguro_session_code') }}';
@@ -87,15 +88,34 @@
 
             PagSeguroDirectPayment.createCardToken({
                 cardNumber: document.querySelector('input[name=card_number]').value,
-                brand: document.querySelector('input[name=caard_brand]').value,
+                brand: document.querySelector('input[name=card_brand]').value,
                 cvv: document.querySelector('input[name=card_cvv]').value,
                 expirationMonth: document.querySelector('input[name=card_month]').value,
                 expirationYear: document.querySelector('input[name=card_year]').value,
                 success: function(res) {
-                    console.log(res);
+                    console.log(res.card.token);
+                    proccessPayment(res.card.token);
                 }
             });
         });
+
+        function proccessPayment(token) {
+            let data = {
+                token: token,
+                hash: PagSeguroDirectPayment.getSenderHash(), // Hash que identifica o usuário nesta sessão
+                installment: document.querySelector('select-installments').value
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '',
+                data: data,
+                dataType: 'json', // Aceita somente o json
+                success: function(res) {
+                    console.log(res);
+                }
+            });
+        }
 
         function getInstallments(amount, brand) {
             PagSeguroDirectPayment.getInstallments({
@@ -119,7 +139,7 @@
         function drawSelectInstallments(installments) {
             let select = '<label>Opções de Parcelamento:</label>';
 
-            select += '<select class="form-control">';
+            select += '<select class="form-control select-installments">';
 
             for(let l of installments) {
                 select += `<option value="${l.quantity}|${l.installmentAmount}">${l.quantity}x de ${l.installmentAmount} - Total fica ${l.totalAmount}</option>`;
