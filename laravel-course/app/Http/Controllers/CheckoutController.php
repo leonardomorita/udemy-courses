@@ -11,15 +11,23 @@ class CheckoutController extends Controller
 {
     public function index()
     {
+        // session()->forget('pagseguro_session_code');
+
         if ( !Auth::check() ) {
             return redirect()->route('login');
         }
 
         $this->makePagSeguroSession();
-        // var_dump(session()->get('pagseguro_session_code'));
-        // session()->forget('pagseguro_session_code');
 
-        return view('checkout');
+        $total = 0;
+
+        $cartItems = array_map(function($item) {
+            return $item['amount'] * $item['price'];
+        }, session()->get('cart'));
+
+        $total = array_sum($cartItems);
+
+        return view('checkout', compact('total'));
     }
 
     public function proccess(Request $request)
@@ -36,7 +44,7 @@ class CheckoutController extends Controller
 
         // Set a reference code for this payment request. It is useful to identify this payment
         // in future notifications.
-        $reference = 'Q1W2';
+        $reference = 'XPTO';
         $creditCard->setReference($reference);
 
         // Set the currency
@@ -56,10 +64,11 @@ class CheckoutController extends Controller
 
         // Set your customer information.
         // If you using SANDBOX you must use an email @sandbox.pagseguro.com.br
-        $user = Auth::user();
-        $email = env('PAGSEGURO_EMAIL') == 'sandbox' ? 'test@sandbox.pagseguro.com.br' : $user->email;
+        $user = auth()->user();
+        $email = env('PAGSEGURO_ENV') == 'sandbox' ? 'test@sandbox.pagseguro.com.br' : $user->email;
+
         $creditCard->setSender()->setName($user->name);
-        $creditCard->setSender()->setEmail($user->email);
+        $creditCard->setSender()->setEmail($email);
         $creditCard->setSender()->setPhone()->withParameters(
             11,
             56273440
@@ -104,6 +113,7 @@ class CheckoutController extends Controller
         // Set the installment quantity and value (could be obtained using the Installments
         // service, that have an example here in \public\getInstallments.php)
         list($quantity, $installmentAmount) = explode('|', $data['installment']);
+        $installmentAmount = number_format($installmentAmount, 2, '.', '');
         $creditCard->setInstallment()->withParameters($quantity, $installmentAmount);
 
         // Set the credit card holder information
@@ -128,7 +138,7 @@ class CheckoutController extends Controller
             \PagSeguro\Configuration\Configure::getAccountCredentials()
         );
 
-        dd($result);
+        // dd($result);
     }
 
     private function makePagSeguroSession()
