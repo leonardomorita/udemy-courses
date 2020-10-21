@@ -138,7 +138,24 @@ class CheckoutController extends Controller
             \PagSeguro\Configuration\Configure::getAccountCredentials()
         );
 
-        // dd($result);
+        dd($result);
+
+        $userOrder = [
+            'reference' => $reference,
+            'pagseguro_code' => $result->getCode(),
+            'pagseguro_status' => $result->getStatus(),
+            'items' => serialize($cartItems),
+            'store_id' => 42,
+        ];
+
+        $user->orders()->create($userOrder);
+
+        return response()->json([
+            'data' => [
+                'status' => true,
+                'message' => 'O pedido foi criado com sucesso.'
+            ]
+        ]);
     }
 
     private function makePagSeguroSession()
