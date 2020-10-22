@@ -15,6 +15,8 @@
                 margin-bottom: 40px;
             }
         </style>
+
+        @yield('stylesheets')
     </head>
 
     <body>

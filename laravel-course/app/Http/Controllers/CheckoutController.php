@@ -33,30 +33,48 @@ class CheckoutController extends Controller
 
     public function proccess(Request $request)
     {
-        $data = $request->all();
-        $cartItems = session()->get('cart');
-        $user = auth()->user();
-        $reference = 'XPTO';
+        try {
+            $data = $request->all();
+            $cartItems = session()->get('cart');
+            $user = auth()->user();
+            $reference = 'XPTO';
 
-        $creditCardPayment = new CreditCard($cartItems, $user, $data, $reference);
-        $result = $creditCardPayment->doPayment();
+            $creditCardPayment = new CreditCard($cartItems, $user, $data, $reference);
+            $result = $creditCardPayment->doPayment();
 
-        $userOrder = [
-            'reference' => $reference,
-            'pagseguro_code' => $result->getCode(),
-            'pagseguro_status' => $result->getStatus(),
-            'items' => serialize($cartItems),
-            'store_id' => 42,
-        ];
+            $userOrder = [
+                'reference' => $reference,
+                'pagseguro_code' => $result->getCode(),
+                'pagseguro_status' => $result->getStatus(),
+                'items' => serialize($cartItems),
+                'store_id' => 42,
+            ];
 
-        $user->orders()->create($userOrder);
+            $user->orders()->create($userOrder);
 
-        return response()->json([
-            'data' => [
-                'status' => true,
-                'message' => 'O pedido foi criado com sucesso.'
-            ]
-        ]);
+            session()->forget('cart');
+            session()->forget('pagseguro_session_code');
+
+            return response()->json([
+                'data' => [
+                    'status' => true,
+                    'message' => 'O pedido foi criado com sucesso.',
+                    'order' => $reference
+                ]
+            ]);
+        } catch ( \Exception $e ) {
+            return response()->json([
+                'data' => [
+                    'status' => false,
+                    'message' => 'Problemas ao processar o pedido.'
+                ]
+                ], 401);
+        }
+    }
+
+    public function thanks()
+    {
+        return view('thanks');
     }
 
     private function makePagSeguroSession()
