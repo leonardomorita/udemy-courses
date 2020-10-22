@@ -138,8 +138,6 @@ class CheckoutController extends Controller
             \PagSeguro\Configuration\Configure::getAccountCredentials()
         );
 
-        dd($result);
-
         $userOrder = [
             'reference' => $reference,
             'pagseguro_code' => $result->getCode(),

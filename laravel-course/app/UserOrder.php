@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserOrder extends Model
 {
     protected $table = 'user_orders';
+    protected $fillable = ['reference', 'pagseguro_status', 'pagseguro_code', 'store_id', 'items'];
 
     public function user()
     {
