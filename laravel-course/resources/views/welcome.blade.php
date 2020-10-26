@@ -26,4 +26,24 @@
                 </div> <div class="row">
             @endif
         @endforeach
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Lojas Destaques</h2>
+            <hr>
+        </div>
+        @foreach ( $stores as $store )
+            <div class="col-lg-4">
+                @if ( !$store->logo )
+                    <img class="img-fluid" src="https://via.placeholder.com/300x150.png?text=logo" alt="Loja sem logo">
+                @else
+                    <img src="{{ asset('storage/' . $store->logo) }}" alt="{{ $store->name }}.png" class="img-fluid">
+                @endif
+
+                <h3>{{ $store->name }}</h3>
+                <p>{{ $store->description }}</p>
+            </div>
+        @endforeach
+    </div>
 @endsection
