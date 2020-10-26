@@ -18,6 +18,10 @@ class CheckoutController extends Controller
             return redirect()->route('login');
         }
 
+        if ( !session()->get('cart') ) {
+            return redirect()->route('home');
+        }
+
         $this->makePagSeguroSession();
 
         $total = 0;
