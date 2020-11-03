@@ -5,11 +5,12 @@
 @endsection
 
 @section('content')
-    <div class="col-12">
-        <h1>{{ $category->name }}</h1>
-        <hr>
-    </div>
     <div class="row">
+        <div class="col-12">
+            <h1>{{ $category->name }}</h1>
+            <hr>
+        </div>
+
         @forelse ( $category->products as $key => $product )
             <div class="col-lg-4 mb-2">
                 <div class="card" style="width: 18rem;">
