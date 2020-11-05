@@ -18,7 +18,15 @@ class CartController extends Controller
 
     public function add(Request $request)
     {
-        $product = $request->product;
+        $productData = $request->product;
+        $product = \App\Product::whereSlug($productData['slug']);
+
+        // Caso não existir um produto, redirecione na página home
+        if ( !$product->count() || $productData['amount'] <= 0 ) return redirect()->route('home');
+
+        $product = $product->first(['name', 'price'])->toArray();
+        // O array 'product' vai sobreescrever os valores das chaves que são iguais do array 'productData'
+        $product = array_merge($productData, $product);
 
         // Verifica na sessão a existência da variável 'cart'
         if ( session()->has('cart') ) {
