@@ -463,6 +463,25 @@
 // }
 
 // Aula 34 - Jquery sintaxe
-$('#esconder').click(function() {
-    $('.exemplo').hide(); // $('.exemplo').css('display', 'none');
+// $('#esconder').click(function() {
+//     $('.exemplo').hide(); // $('.exemplo').css('display', 'none');
+// });
+
+// Aula 35 - Jquery manipulação html
+let conteudoHtml = $('#paragrafo-html').html();
+console.log(conteudoHtml);
+
+let url = $('#paragrafo-link').attr('href');
+console.log(url);
+
+$('#paragrafo-link').attr('href', 'http://www.udemy.com.br');
+url = $('#paragrafo-link').attr('href');
+console.log(url);
+
+$('#mudar_imagem').click(function() {
+    $('#imagem_js').attr('src', 'https://cdn.tutsplus.com/net/uploads/2013/12/managing-async-nodejs-retina-preview.png');
+    $('#mudar_imagem').hide();
 });
+
+$('#paragrafo-empty').empty(); // Remove o conteúdo do elemento
+$('#paragrafo-empty').remove(); // Remove o elemento
