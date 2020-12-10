@@ -441,23 +441,28 @@
 // };
 
 // Aula 31 - Evento onchange
-document.querySelector('#escolaridade').onchange = function() {
-    let select = document.querySelector('#escolaridade');
-    let selectIndex = select.options.selectedIndex;
-    document.querySelector('#escolaridade_selecionada').innerHTML = select.options[selectIndex].textContent;
-};
+// document.querySelector('#escolaridade').onchange = function() {
+//     let select = document.querySelector('#escolaridade');
+//     let selectIndex = select.options.selectedIndex;
+//     document.querySelector('#escolaridade_selecionada').innerHTML = select.options[selectIndex].textContent;
+// };
 
-let check = document.getElementsByName('lanche');
+// let check = document.getElementsByName('lanche');
 
-for ( let i = 0; i < check.length; i++ ) {
-    check[i].onchange = function() {
-        let list = document.querySelector('#check_selecionado');
+// for ( let i = 0; i < check.length; i++ ) {
+//     check[i].onchange = function() {
+//         let list = document.querySelector('#check_selecionado');
 
-        list.innerHTML = "";
-        for ( let j = 0; j < check.length; j++ ) {
-            if ( check[j].checked ) {
-                list.innerHTML += '<li>' + check[j].value + '</li>';
-            }
-        }
-    }
-}
+//         list.innerHTML = "";
+//         for ( let j = 0; j < check.length; j++ ) {
+//             if ( check[j].checked ) {
+//                 list.innerHTML += '<li>' + check[j].value + '</li>';
+//             }
+//         }
+//     }
+// }
+
+// Aula 34 - Jquery sintaxe
+$('#esconder').click(function() {
+    $('.exemplo').hide(); // $('.exemplo').css('display', 'none');
+});
