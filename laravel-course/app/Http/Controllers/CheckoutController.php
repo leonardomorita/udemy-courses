@@ -54,7 +54,10 @@ class CheckoutController extends Controller
                 'store_id' => 42,
             ];
 
-            $user->orders()->create($userOrder);
+            $userOrder = $user->orders()->create($userOrder);
+
+            // Fazer o relacionamento do pedido com a loja
+            $userOrder->stores()->sync($stores);
 
             session()->forget('cart');
             session()->forget('pagseguro_session_code');
