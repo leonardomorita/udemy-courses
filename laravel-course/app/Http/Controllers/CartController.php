@@ -24,7 +24,7 @@ class CartController extends Controller
         // Caso não existir um produto, redirecione na página home
         if ( !$product->count() || $productData['amount'] <= 0 ) return redirect()->route('home');
 
-        $product = $product->first(['name', 'price'])->toArray();
+        $product = $product->first(['name', 'price', 'store_id'])->toArray();
         // O array 'product' vai sobreescrever os valores das chaves que são iguais do array 'productData'
         $product = array_merge($productData, $product);
 

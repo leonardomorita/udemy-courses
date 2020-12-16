@@ -39,7 +39,14 @@ class CheckoutController extends Controller
     {
         try {
             $data = $request->all();
+
             $cartItems = session()->get('cart');
+
+            // Pegar somente a coluna específica
+            $storesIdArray = array_column($cartItems, 'store_id');
+            // Deletar a duplicidade dos elementos
+            $stores = array_unique($storesIdArray);
+
             $user = auth()->user();
             $reference = 'XPTO';
 
