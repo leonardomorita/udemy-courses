@@ -24,14 +24,14 @@
                         <td>{{ $category->name }}</td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{ route('admin.categories.edit', ['category' => $category->id]) }}" class="btn btn-primary btn-sm">EDITAR</a>
+                                {{-- <a href="{{ route('admin.categories.edit', ['category' => $category->id]) }}" class="btn btn-primary btn-sm">EDITAR</a> --}}
 
-                                <form action="{{ route('admin.categories.destroy', ['category' => $category->id]) }}" method="POST">
+                                {{-- <form action="{{ route('admin.categories.destroy', ['category' => $category->id]) }}" method="POST">
                                     @csrf
                                     @method("DELETE")
 
                                     <button type="submit" class="btn btn-danger btn-sm">EXCLUIR</button>
-                                </form>
+                                </form> --}}
                             </div>
 
 
@@ -40,6 +40,6 @@
                 @endforeach
             </tbody>
         </table>
-        {{ $categories->links() }}
+        {{-- {{ $categories->links() }} --}}
     @endif
 @endsection
