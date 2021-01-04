@@ -17,9 +17,8 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = auth()->user()->store->orders;
-        dd($orders);
+        $orders = auth()->user()->store->orders()->paginate(10);
 
-        return view('admin.orders.index', compact('store'));
+        return view('admin.orders.index', compact('orders'));
     }
 }
