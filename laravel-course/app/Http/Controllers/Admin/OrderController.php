@@ -18,6 +18,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = auth()->user()->store->orders()->paginate(10);
+        // dd(unserialize($orders[0]->items));
 
         return view('admin.orders.index', compact('orders'));
     }
