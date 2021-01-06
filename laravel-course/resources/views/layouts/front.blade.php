@@ -34,11 +34,11 @@
                         <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
                     </li>
 
-                    {{-- @foreach ( $categories as $category )
+                    @foreach ( $categories as $category )
                         <li class="nav-item @if(request()->is('category/'. $category->slug)) active @endif">
                             <a class="nav-link" href="{{ route('category.index', ['slug' => $category->slug]) }}">{{ $category->name }}</a>
                         </li>
-                    @endforeach --}}
+                    @endforeach
                 </ul>
 
                 {{-- @auth --}}
@@ -70,6 +70,12 @@
                                 <span class="nav-link">{{auth()->user()->name}}</span>
                             </li> --}}
 
+                            @auth
+                                <li class="nav-item @if ( request()->is('my-orders') ) active @endif">
+                                    <a href="{{ route('user-order.index') }}" class="nav-link">Meus Pedidos</a>
+                                </li>
+                            @endauth
+
                             <li class="nav-item">
                                 <a href="{{ route('cart.index') }}" class="nav-link">
                                     @if (session()->has('cart'))
@@ -89,6 +95,10 @@
             @include('flash::message')
             @yield('content')
         </div>
+
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
         @yield('scripts')
     </body>

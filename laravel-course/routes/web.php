@@ -34,6 +34,8 @@ Route::prefix('/checkout')->name('checkout.')->group(function() {
 
 // Adicionando para as rotas que estão dentro do grupo, um middleware de verificação de autenticação do usuário
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('my-orders', 'UserOrderController@index')->name('user-order.index');
+
     Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
         // Route::prefix('stores')->name('stores.')->group(function () {
         //     // Route::get('/stores', 'Admin\\StoreController@index');

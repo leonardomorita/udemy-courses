@@ -15,6 +15,6 @@ class CategoryViewComposer
 
     public function compose($view)
     {
-        return $view->with('layouts.front', $this->category->all(['name', 'slug'])->sortBy('name'));
+        return $view->with('categories', $this->category->all(['name', 'slug'])->sortBy('name'));
     }
 }
