@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        //Auth::logout();exit;
         $products = $this->product->limit(6)->orderBy('price', 'DESC')->get();
         $stores = \App\Store::limit(3)->get();
 
