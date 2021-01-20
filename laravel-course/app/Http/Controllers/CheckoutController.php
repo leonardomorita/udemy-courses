@@ -66,6 +66,9 @@ class CheckoutController extends Controller
             // Fazer o relacionamento do pedido com a loja
             $userOrder->stores()->sync($stores);
 
+            // Notificar a loja do novo pedido
+            $store = (new Store())->notifyStoreOwners($stores);
+
             session()->forget('cart');
             session()->forget('pagseguro_session_code');
 

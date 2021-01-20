@@ -41,4 +41,15 @@ class Store extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
+
+    public function notifyStoreOwners(array $storesId = [])
+    {
+        // Retorna todas as lojas referentes aos ids que estam dentro do array
+        $stores = $this->whereIn('id', $storesId)->get();
+
+        // Retorna somente os donos (users) da loja. E para cada dono, salva uma notificação no banco de dados
+        $stores->map(function($store) {
+            return $store->user;
+        })->each->notify(new \App\Notifications\StoreReceiveNewOrder());
+    }
 }
