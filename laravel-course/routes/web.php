@@ -59,3 +59,25 @@ Route::group(['middleware' => ['auth']], function () {
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('notification', function() {
+    $user = \App\User::find(1);
+
+    // Salvar a notificalção dentro do banco de dados
+    // $user->notify(new \App\Notifications\StoreReceiveNewOrder());
+
+    // Retornar todas as notificações, tanto as lidas quanto as não lidas
+    $allNotifications = $user->notifications;
+
+    // $notification = $user->notifications->first();
+    // Fazer com que uma notificação seja marcada como lida
+    // $notification->markAsRead();
+
+    // Retornar todas as notificações lidas
+    $readNotifications = $user->readNotifications;
+
+    // Retornar todas as notificações não lidas
+    $unreadNotifications = $user->unreadNotifications;
+
+    return $allNotifications;
+});
