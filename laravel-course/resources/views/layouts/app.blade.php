@@ -38,6 +38,16 @@
                     </ul>
                     <div class="my-2 my-lg-0">
                         <ul class="navbar-nav mr-auto">
+                            <li class="nav-item mr-5">
+                                <a href="{{ route('admin.notification.index') }}" class="nav-link @if (request()->is('admin/notifications*')) active @endif">
+                                    <span class="badge badge-danger">
+                                        {{auth()->user()->unreadNotifications->count()}}
+                                    </span>
+
+                                    Notificação
+                                </a>
+                            </li>
+
                             <li class="nav-item active">
                                 <a class="nav-link" href="#" onclick="event.preventDefault(); document.querySelector('form.logout').submit();">Sair</a>
 

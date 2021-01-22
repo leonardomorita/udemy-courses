@@ -24,4 +24,12 @@ class NotificationController extends Controller
         flash('Todas notificações foram marcadas como lidas com sucesso')->success();
         return redirect()->route('admin.notification.index');
     }
+
+    public function readSpecificNotification($notificationId)
+    {
+        auth()->user()->notifications()->find($notificationId)->markAsRead();
+
+        flash('A notificação foi marcada como lida com sucesso')->success();
+        return redirect()->route('admin.notification.index');
+    }
 }
