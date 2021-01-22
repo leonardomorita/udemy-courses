@@ -5,6 +5,7 @@
 namespace App\Http\Controllers;
 
 use App\Payment\PagSeguro\CreditCard;
+use App\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
