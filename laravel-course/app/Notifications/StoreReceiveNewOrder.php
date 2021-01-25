@@ -29,7 +29,7 @@ class StoreReceiveNewOrder extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'mail'];
     }
 
     /**
@@ -41,9 +41,10 @@ class StoreReceiveNewOrder extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject('Novo pedido de compra')
+                    ->greeting('Olá vendedor, tudo bem?')
+                    ->line('Você recebeu um novo pedido.')
+                    ->action('Ver pedido', route('user-order.index'));
     }
 
     /**
